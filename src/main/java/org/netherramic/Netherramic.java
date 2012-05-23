@@ -37,7 +37,6 @@ package org.netherramic;
 
 public class Netherramic extends JavaPlugin
 {
-	public static String pluginName = "Netherramic";
 	public	boolean recipeAdded = false;
 	
 	public void onLoad() {}
@@ -51,17 +50,9 @@ public class Netherramic extends JavaPlugin
 		netherBrickRecipe = netherBrickRecipe.setIngredient('n', Material.NETHERRACK);
 		
 		getServer().addRecipe(netherBrickRecipe);
-		
-		Log.info("%s enabled.", getDescription().getVersion());
 	}
 	
-	public void onDisable()
-	{
-		Log.info("%s disabled.", getDescription().getVersion());
-	}
+	public void onDisable() {}
 	
-	public void reload()
-	{
-		Log.info("%s reloaded.", getDescription().getVersion());
-	}
+	public void reload() {}
 }
