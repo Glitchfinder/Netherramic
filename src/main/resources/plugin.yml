@@ -1,0 +1,7 @@
+name: Netherramic
+version: 1.0
+description: This plugin adds a recipe to craft Nether Brick using nine Netherrack.
+author: Glitchfinder 
+website: https://github.com/Glitchfinder/Netherramic
+
+main: org.netherramic.Netherramic
