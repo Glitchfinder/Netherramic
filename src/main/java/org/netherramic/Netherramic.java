@@ -26,6 +26,12 @@ package org.netherramic;
 //* IMPORTS: JDK/JRE
 	//* NOT NEEDED
 //* IMPORTS: BUKKIT
+	import org.bukkit.Bukkit;
+	import org.bukkit.entity.Player;
+	import org.bukkit.event.inventory.CraftItemEvent;
+	import org.bukkit.event.EventHandler;
+	import org.bukkit.event.EventPriority;
+	import org.bukkit.event.Listener;
 	import org.bukkit.inventory.ItemStack;
 	import org.bukkit.inventory.ShapedRecipe;
 	import org.bukkit.Material;
@@ -35,7 +41,7 @@ package org.netherramic;
 //* IMPORTS: OTHER
 	//* NOT NEEDED
 
-public class Netherramic extends JavaPlugin
+public class Netherramic extends JavaPlugin implements Listener
 {
 	public	boolean recipeAdded = false;
 	
@@ -50,9 +56,40 @@ public class Netherramic extends JavaPlugin
 		netherBrickRecipe = netherBrickRecipe.setIngredient('n', Material.NETHERRACK);
 		
 		getServer().addRecipe(netherBrickRecipe);
+		getServer().getPluginManager().registerEvents(this, this);
 	}
 	
 	public void onDisable() {}
 	
 	public void reload() {}
+
+	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+	public void craftNetherBrick(CraftItemEvent event)
+	{
+		if(event == null)
+			return;
+		else if(event.getRecipe() == null)
+			return;
+		else if(event.getRecipe().getResult() == null)
+			return;
+		else if(event.getRecipe().getResult().getType() == null)
+			return;
+		else if(event.getRecipe().getResult().getType() != Material.NETHER_BRICK)
+			return;
+		else if(event.getWhoClicked() == null)
+			return;
+		else if(!(event.getWhoClicked() instanceof Player))
+			return;
+
+		final Player player = (Player) event.getWhoClicked();
+
+		Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				player.updateInventory();
+			}
+		});
+	}
 }
